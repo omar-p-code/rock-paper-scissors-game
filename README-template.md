@@ -35,21 +35,20 @@ Users should be able to:
 ### Links
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [Site URL](https://omar-p-code.github.io/rock-paper-scissors-game/)
 
 ## My process
 
 ### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties
-- JavaScript
-- Flexbox
-- [PugJS]() - JS Template Engine
-- [SASS]() - Css Preprocessor 
-- [TypeScript]() - JS 
+- Semantic HTML5 markup  
+- CSS custom properties  
+- JavaScript  
+- Flexbox  
+- [PugJS](https://pugjs.org) - JS Template Engine  
+- [SASS](https://sass-lang.com) - CSS Preprocessor  
+- [TypeScript](https://www.typescriptlang.org) - Typed superset of JavaScript  
 
-To see how you can add code snippets, see below:
 ```scss
 $scissors: linear-gradient(
    to bottom,
