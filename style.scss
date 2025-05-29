@@ -1,0 +1,499 @@
+$mobile: 375px;
+$desktop: 1366px;
+// Primary Colors
+$scissors: linear-gradient(
+   to bottom,
+   hsl(39, 89%, 49%),
+   hsl(40, 84%, 53%)
+);
+
+$paper: linear-gradient(
+   to bottom,
+   hsl(230, 89%, 62%),
+   hsl(230, 89%, 65%)
+);
+
+$rock: linear-gradient(
+   to bottom,
+   hsl(349, 71%, 52%),
+   hsl(349, 70%, 56%)
+);
+
+$lizard: linear-gradient(
+   to bottom,
+   hsl(261, 73%, 60%),
+   hsl(261, 72%, 63%)
+);
+
+$spock: linear-gradient(
+   to bottom,
+   hsl(189, 59%, 53%),
+   hsl(189, 58%, 57%)
+);
+
+$elements: (
+   scissors: $scissors,
+   paper: $paper,
+   rock: $rock,
+   lizard: $lizard,
+   spock: $spock
+);
+
+// Neutral Colors
+$dark-text: hsl(229, 25%, 31%);
+$score-text: hsl(229, 64%, 46%);
+$header-outline: hsl(217, 16%, 45%);
+
+// Background Colors
+$radial-gradient: linear-gradient(
+   to bottom,
+   hsl(214, 47%, 23%),
+   hsl(237, 49%, 15%)
+);
+
+// fonts
+$font-family: 'Barlow Semi Condensed', sans-serif;
+$font-weight: 600;
+
+* {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   transition: all 0.5s;
+}
+
+
+.game {
+   .polygon {
+      $angle-1-x: 100%;
+      $angle-1-y: 38%;
+      $angle-2-x: 80%;
+      $angle-2-y: 100%;
+      $angle-3-x: 19%;
+      $angle-3-y: 100%;
+      $angle-4-x: 0%;
+      $angle-4-y: 38%;
+      $angle-5-x: 50%;
+   $angle-5-y: 0%;
+
+   width: 350px;
+   height: 350px;
+   margin: auto;
+   margin-top: 20px;
+   clip-path: polygon(
+      $angle-1-x $angle-1-y,
+      $angle-2-x $angle-2-y,
+      $angle-3-x $angle-3-y,
+      $angle-4-x $angle-4-y,
+      $angle-5-x $angle-5-y
+   );
+   position: relative;
+   overflow: visible;
+
+   &.picked {
+      pointer-events: none;
+      opacity: 0;
+   }
+
+   > svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+   }
+
+   .ele {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @extend .btn;
+      transition: .3s;
+      box-shadow: 0px -5px 0px rgba(0, 0, 0, 0.3) inset;
+      cursor: pointer;
+      
+      &:hover {
+         box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3) inset;
+         .icon {
+            border-color:transparent;
+         }
+      }
+
+      .icon {
+         width: 80%;
+         height: 80%;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         border-radius: 50%;
+         background-color: white;
+         border: 7px #f9f9f966;
+         border-top-style: inset;
+         transition: .3s;
+      }
+   }
+   
+   .ele.paper {
+      top: $angle-1-y;
+      left: $angle-1-x;
+      transform: translate(-$angle-1-x - 9%, -$angle-1-y + 6%);
+      background: $paper;
+   }
+   .ele.rock {
+      top: $angle-2-y;
+      left: $angle-2-x;
+      transform: translate(-$angle-2-x - 10%, -$angle-2-y - 1%);
+      background: $rock;
+   }
+   .ele.lizard {
+      top: $angle-3-y;
+      left: $angle-3-x;
+      transform: translate(-$angle-3-x + 10%,-$angle-3-y - 1%);
+      background: $lizard;
+   }
+   .ele.spock {
+      top: $angle-4-y;
+      left: $angle-4-x;
+      transform: translate(-$angle-4-x + 9%, -$angle-4-y + 6%);
+      background: $spock;
+   }
+   .ele.scissors {
+      top: $angle-5-y;
+      left: $angle-5-x;
+      transform: translate(-$angle-5-x, -$angle-5-y + 13%);
+      background: $scissors;
+   }
+}
+
+.result {
+   display: none;
+   justify-content: center;
+   align-items: center;
+   height: fit-content;
+   background-color: transparent;
+   z-index: 10;
+   position: absolute;
+   top: 70%;
+   left: 50%;
+   transform: translate(-50%, -70%);
+}
+
+.action {
+   display: none;
+   opacity: 0;
+   pointer-events: none;
+   justify-content: center;
+   gap: 10%;
+   width: 50vw;
+   margin: 20vh auto;
+   text-align: center;
+
+   .choice {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      &>div {
+         background-color: #222;
+         width: 150px;
+         height: 150px;
+         border-radius: 50%;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+      }
+
+      @each $ele, $gradient in $elements {
+         &>div.#{$ele} {
+            background: $gradient;
+            box-shadow: 0px -5px 0px rgba(0, 0, 0, 0.3) inset;
+            cursor: default;
+            transition: .3s;
+
+            &:hover {
+               box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3) inset;
+               .icon {
+                  border-color: transparent;
+               }
+            }
+
+            .icon {
+               width: 80%;
+               height: 80%;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               border-radius: 50%;
+               background-color: white;
+               border: 7px #f9f9f966;
+               border-top-style: inset;
+               transition: .3s;
+            }
+         }
+      }
+   }
+
+}
+
+&.picked {
+   .polygon {
+      animation: fadeOut .3s linear forwards;
+   }
+   .action {
+      animation: fadeIn .3s .3s forwards;
+      display: flex;
+      transition: .5s;
+   }
+}
+
+&.picked-result {
+   .action {
+      display: flex;
+      width: 80vw;
+      div.choice {
+         flex: 1;
+      }
+
+   .result {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      width: fit-content;
+      height: fit-content;
+      animation: fadeIn .3s forwards;
+
+      .result-text {
+         font-size: 3rem;
+         font-weight: bold;
+         color: white;
+      }
+
+      .result-btn {
+         @extend .btn;
+         padding: 1rem 2rem;
+         color: $dark-text;
+         background: white !important;
+         color: $dark-text !important;
+         border-radius: 1vw;
+         font-size: 1.2rem;
+         cursor: pointer;
+      }
+   }
+}
+}
+
+}
+body {
+   font-family: $font-family;
+   color: $dark-text;
+   background: $radial-gradient;
+   margin: 0;
+   padding: 0;
+   min-height: 100vh;
+   max-height: 100vh;
+   padding-block: 2rem;
+
+   header {
+      display: flex;
+      width: 80vw;
+      max-width: 700px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: transparent;
+      border: 3px solid $header-outline;
+      border-radius: 2vw;
+      color: white;
+      margin-inline: auto;
+      cursor: default;
+   }
+
+   a {
+      text-decoration: none;
+      color: inherit;
+   }
+
+   .btn {
+      cursor: pointer;
+      border: none;
+      outline: none;
+      background: none;
+   }
+
+   .score span:first-child {
+      color: $score-text;
+      font-size: 1.5rem;
+      font-weight: 700;
+   }
+
+   .score span:last-child {
+      color: $dark-text;
+      font-size: 2rem;
+      font-weight: 600;
+   }
+
+   .score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 0.5rem;
+      background-color: rgb(255, 255, 255);
+      padding: 3%;
+      border-radius: 10px;
+   }
+}
+
+.rules {
+   position: absolute;
+   right: 10px;
+   bottom: 10px;
+   user-select: none;
+   
+   .rules-btn {
+      border-radius: 1vw;
+      transition: .3s;
+      color: white;
+      border: 1px solid $header-outline;
+      cursor: pointer;
+      padding: 10px;
+      width: 100%;
+      height: 100%;
+      &:hover {
+         background-color: rgba(255, 255, 255, 0.1);
+      }
+   }
+
+
+   .rules-modal {
+      animation: fadeIn .3s forwards;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: fit-content;
+      height: fit-content;
+      background-color: white;
+      border-radius: 2vw;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: .3s;
+      cursor: default;
+
+      .rules-content {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+
+         .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 1rem;
+
+            .close-btn {
+               cursor: pointer;
+               font-size: 1.5rem;
+               color: black;
+               background-color: transparent;
+               border: none;
+               outline: none;
+            }
+
+            h2 {
+               font-size: 1.5rem;
+               margin-bottom: 1rem;
+               color: black;
+            }
+         }
+      }
+   }
+
+   .rules-modal.hidden {
+      animation: fadeOut .3s forwards;
+   }
+}
+
+
+@media screen and (max-width: $mobile) {
+   body {
+      font-size: 16px;
+   }
+}
+
+@media screen and (min-width: $mobile) and (max-width: $desktop) {
+   body {
+      font-size: 18px;
+      .result {
+         backdrop-filter: blur(150px);
+         width: 70vw !important;
+         height: 60vh !important;
+         border-radius: 2rem;
+      }
+   }
+}
+
+@media screen and (min-width: $desktop) {
+   body {
+      font-size: 20px;
+   }
+}
+
+@media (max-width: 768px) {
+   .rules{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .rules-btn {
+         width: fit-content;
+         text-align: center;
+      }
+   }
+}
+
+
+@keyframes fadeIn {
+   from {
+      opacity: 0;
+      pointer-events: none;
+   }
+   50% {
+      opacity: 1;
+      pointer-events: auto;
+   }
+   to {
+      display: flex;
+      opacity: 1;
+      pointer-events: auto;
+   }
+}
+
+@keyframes fadeOut {
+   from {
+      opacity: 1;
+      pointer-events: auto;
+   }
+   50% {
+      opacity: 0;
+      pointer-events: none;
+   }
+   to {
+      opacity: 0;
+      pointer-events: none;
+      display: none;
+   }
+}
