@@ -84,7 +84,7 @@ function determineWinner(player, computer) {
         return 'draw';
     }
     else {
-        score < 1 ? score-- : score = 0;
+        score > 1 ? score-- : score = 0;
         localStorage.setItem('score', JSON.stringify(score));
         new Audio('dist/lose.mp3').play();
         return 'You Lose';
