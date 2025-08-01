@@ -112,7 +112,7 @@ function determineWinner(player: ElementName, computer: ElementName): string {
          new Audio('dist/draw.mp3').play();
          return 'draw';
       }else {
-         score--
+         score < 1? score-- : false;
          localStorage.setItem('score', JSON.stringify(score));
          new Audio('dist/lose.mp3').play();
          return 'You Lose';
